@@ -1,0 +1,84 @@
+{% load static %}
+<div class="bep-search" id="bep-search" role="dialog" aria-label="Поиск по каталогу">
+  <div class="bep-search-inner">
+    <div class="bep-search-field">
+      <i class="tji-search"></i>
+      <input id="bep-search-input" type="search" placeholder="Название модели или категория: NMRV, RT500, планетарный…" autocomplete="off">
+      <button class="bep-icon-btn bep-search-close" style="color:var(--bep-text);border-color:var(--bep-line)" aria-label="Закрыть"><i class="tji-plus" style="transform:rotate(45deg)"></i></button>
+    </div>
+    <div class="bep-search-hint" id="bep-search-hint"></div>
+    <div class="bep-search-results" id="bep-search-results"></div>
+  </div>
+</div>
+
+<div class="bep-modal" id="bep-modal" role="dialog" aria-label="Заказать звонок">
+  <div class="bep-modal-card">
+    <button class="bep-modal-close" aria-label="Закрыть"><i class="tji-plus" style="transform:rotate(45deg)"></i></button>
+    <h3>Заказать звонок</h3>
+    <p class="bep-modal-sub">Инженер перезвонит в рабочее время и подберёт привод под задачу.</p>
+    <form data-bep-form action="{% url 'sendmail' %}" method="post">
+      {% csrf_token %}
+      <div class="bep-form-row">
+        <input type="text" name="name" placeholder="Ваше имя" autocomplete="name">
+        <input type="tel" name="phone" placeholder="+375 (__) ___-__-__" autocomplete="tel" inputmode="tel">
+        <textarea name="comment" placeholder="Что нужно подобрать? Например: мотор-редуктор для конвейера, 1,5 кВт"></textarea>
+      </div>
+      <div class="bep-form-error"></div>
+      <button class="tj-primary-btn" type="submit">
+        <span class="btn-text"><span>Отправить заявку</span></span>
+        <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+      </button>
+      <div class="bep-form-ok">Спасибо! Заявка отправлена — свяжемся в рабочее время.</div>
+    </form>
+  </div>
+</div>
+
+<div class="bep-mobile-panel" id="bep-mobile">
+  <div class="bep-mobile-head">
+    <a class="bep-logo" href="{% url 'home' %}">
+      <img src="{% static 'assets/img/logo-mark-teal.png' %}" alt="{{ site_brand }}">
+      <span class="bep-logo-text">{{ site_brand }}</span>
+    </a>
+    <button class="bep-mobile-close" aria-label="Закрыть"><i class="tji-plus" style="transform:rotate(45deg)"></i></button>
+  </div>
+  <ul>
+    <li><a href="{% url 'categorys' %}">Каталог</a>
+      <ul class="bep-mobile-sub">
+        {% for category in catprocessor_base %}
+        <li><a href="{% url 'products' category.cat_slug %}">{{ category.cat_name }} <span style="opacity:.5">· {{ category.n }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    <li><a href="{% url 'home' %}#brands">Производители</a>
+      <ul class="bep-mobile-sub">
+        {% for manufacturer in manufacturers_base %}
+        <li><a href="{% url 'manufacturer' manufacturer.manufacturer_slug %}">{{ manufacturer.manufacturer_name }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    <li><a href="{% url 'home' %}#industries">Отрасли</a>
+      <ul class="bep-mobile-sub">
+        {% for tag in producttags_base %}
+        <li><a href="{% url 'producttag' tag.tag_slug %}">{{ tag.tag_name }} <span style="opacity:.5">· {{ tag.n }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    <li><a href="{% url 'home' %}#process">Как мы работаем</a></li>
+    <li><a href="{% url 'contact' %}">Контакты</a></li>
+  </ul>
+  <div class="bep-mobile-contacts">
+    <a href="{{ site_phone_href }}"><i class="tji-phone"></i> {{ site_phone }}</a>
+    <a href="mailto:{{ site_email }}"><i class="tji-envelop"></i> {{ site_email }}</a>
+    <span style="color:rgba(255,255,255,.55);font-size:13px">{{ site_address }}</span>
+    <button class="tj-primary-btn" data-open-modal style="margin-top:8px">
+      <span class="btn-text"><span>Заказать звонок</span></span>
+      <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+    </button>
+  </div>
+</div>
+
+<button class="bep-progress" aria-label="Наверх">
+  <svg viewBox="0 0 64 64"><circle class="track" cx="32" cy="32" r="28"></circle>
+    <circle class="bar" cx="32" cy="32" r="28"></circle></svg>
+  <span class="bep-progress-label">0%</span>
+</button>

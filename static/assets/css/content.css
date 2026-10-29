@@ -1,0 +1,30 @@
+.bep-pagehead-lead { color: rgba(255,255,255,.78); max-width: 680px; margin: 0; font-size: 16px; line-height: 1.5; }
+.bep-tabpane p,
+.editorjs-content p { margin: 0 0 12px; line-height: 1.65; }
+.bep-prose h2,
+.bep-prose h3,
+.bep-tabpane h2,
+.bep-tabpane h3,
+.editorjs-content h2,
+.editorjs-content h3 { margin: 18px 0 8px; }
+.bep-prose ul,
+.bep-prose ol,
+.bep-tabpane ul,
+.bep-tabpane ol,
+.editorjs-content ul,
+.editorjs-content ol { margin: 0 0 12px; padding-left: 1.2em; }
+.bep-prose table,
+.bep-tabpane table,
+.editorjs-content table { width: 100%; border-collapse: collapse; margin: 0 0 16px; }
+.bep-prose td,
+.bep-prose th,
+.bep-tabpane td,
+.bep-tabpane th,
+.editorjs-content td,
+.editorjs-content th { border-bottom: 1px solid var(--bep-line, #d7e0e0); padding: 8px 10px; text-align: left; vertical-align: top; }
+.bep-prose img,
+.bep-tabpane img,
+.editorjs-content img { max-width: 100%; height: auto; }
+.bep-office-card { background: #fff; border: 1px solid var(--bep-line, #d7e0e0); border-radius: 16px; padding: 22px; height: 100%; }
+.bep-office-card h3 { margin: 0 0 8px; font-size: 20px; }
+.bep-contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }

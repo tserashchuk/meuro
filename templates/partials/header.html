@@ -1,0 +1,112 @@
+{% load static %}
+<header class="site-header" id="site-header">
+  <div class="container">
+    <div class="header-wrapper">
+      <a class="bep-logo" href="{% url 'home' %}">
+        <img src="{% static 'assets/img/logo-mark-teal.png' %}" alt="{{ site_brand }}">
+        <span class="bep-logo-text">{{ site_brand }}<em>машиностроительное оборудование</em></span>
+      </a>
+
+      <div class="menu-area d-none d-lg-inline-flex align-items-center">
+        <nav class="mainmenu">
+          <ul>
+            <li class="has-dropdown mega-parent">
+              <a href="{% url 'categorys' %}">Каталог</a>
+              <ul class="sub-menu bep-mega">
+                <li>
+                  <div class="bep-mega-panel">
+                    {% for column in menu_columns %}
+                    <div class="bep-mega-col">
+                      <h5>{{ column.title }}</h5>
+                      <ul class="bep-mega-list">
+                        {% for category in column.items %}
+                        <li>
+                          <a href="{% url 'products' category.cat_slug %}">
+                            <span class="bep-mega-name">{{ category.cat_name }}{% if category.is_hot %}<span class="bep-mega-badge">Хит</span>{% endif %}</span>
+                            <span class="bep-mega-count">{{ category.n }}</span>
+                          </a>
+                        </li>
+                        {% endfor %}
+                        {% if forloop.last %}
+                        <li class="bep-mega-sep">
+                          <a href="{% url 'categorys' %}">
+                            <span class="bep-mega-name">Все {{ catprocessor_base|length }} категорий</span>
+                            <span class="bep-mega-count">{{ product_total }}</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="{% url 'home' %}#brands">
+                            <span class="bep-mega-name">Производители</span>
+                            <span class="bep-mega-count">{{ manufacturers_base|length }}</span>
+                          </a>
+                        </li>
+                        {% endif %}
+                      </ul>
+                    </div>
+                    {% endfor %}
+                    <aside class="bep-mega-promo">
+                      <h3>{{ product_total }}</h3>
+                      <p>модели в каталоге · {{ catprocessor_base|length }} категорий</p>
+                      <a class="bep-mega-phone" href="{{ site_phone_href }}"><i class="tji-phone"></i>{{ site_phone }}</a>
+                      <span class="bep-mega-promo-img"><img src="{% static 'assets/img/hero/slide-2.jpg' %}" alt=""></span>
+                    </aside>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li class="has-dropdown">
+              <a href="{% url 'home' %}#brands">Производители</a>
+              <ul class="sub-menu">
+                {% for manufacturer in manufacturers_base %}
+                <li><a href="{% url 'manufacturer' manufacturer.manufacturer_slug %}">{{ manufacturer.manufacturer_name }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            <li class="has-dropdown mega-parent">
+              <a href="{% url 'home' %}#industries">Отрасли</a>
+              <ul class="sub-menu bep-mega bep-mega--tags">
+                <li>
+                  <div class="bep-mega-panel bep-mega-panel--tags">
+                    {% for column in tag_columns %}
+                    <div class="bep-mega-col">
+                      <h5>{{ column.title }}</h5>
+                      <ul class="bep-mega-list">
+                        {% for tag in column.items %}
+                        <li>
+                          <a href="{% url 'producttag' tag.tag_slug %}" title="{{ tag.tag_name }}">
+                            <span class="bep-mega-name">{{ tag.tag_name }}</span>
+                            <span class="bep-mega-count">{{ tag.n }}</span>
+                          </a>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                    {% endfor %}
+                    <div class="bep-tags-mega-foot">
+                      <a class="bep-tags-mega-all" href="{% url 'categorys' %}">
+                        <span>Все {{ producttags_base|length }} тегов в каталоге</span>
+                        <i class="tji-arrow-right-long"></i>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li><a href="{% url 'home' %}#process">Как мы работаем</a></li>
+            <li><a href="{% url 'contact' %}">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="header-right">
+        <button class="bep-icon-btn" data-open-search aria-label="Поиск по каталогу"><i class="tji-search"></i></button>
+        <a class="bep-header-phone d-none d-xl-inline-flex" href="{{ site_phone_href }}"><i class="tji-phone"></i>{{ site_phone }}</a>
+        <a class="tj-primary-btn header-btn d-none d-md-inline-flex" href="#" data-open-modal>
+          <span class="btn-text"><span>Заказать звонок</span></span>
+          <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+        </a>
+        <button class="bep-burger d-lg-none" aria-label="Меню"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</header>

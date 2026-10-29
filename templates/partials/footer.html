@@ -1,0 +1,129 @@
+{% load static %}
+<footer class="tj-footer-section footer-2 section-gap-x" id="contacts">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row"><div class="col-12">
+        <div class="footer-subscribe">
+          <div class="subscribe-logo">
+            <img src="{% static 'assets/img/logo-mark-white.png' %}" alt="{{ site_brand }}" style="width:56px;height:56px">
+          </div>
+          <div style="max-width:420px">
+            <h4 style="color:#fff;font-size:22px;margin:0 0 6px">Подберём привод под вашу задачу</h4>
+            <p style="color:rgba(255,255,255,.55);font-size:13.5px;margin:0">Инженер перезвонит и уточнит параметры оборудования.</p>
+          </div>
+          <div class="subscribe-form" style="flex:1;min-width:320px">
+            <form data-bep-form action="{% url 'sendmail' %}" method="post">
+              {% csrf_token %}
+              <div class="bep-form-row" style="grid-template-columns:1fr 1fr;display:grid;gap:10px">
+                <input type="text" name="name" placeholder="Ваше имя" autocomplete="name">
+                <input type="tel" name="phone" placeholder="+375 (__) ___-__-__" autocomplete="tel" inputmode="tel">
+              </div>
+              <div class="bep-form-error" style="margin:6px 0 8px"></div>
+              <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <button class="tj-primary-btn" type="submit">
+                  <span class="btn-text"><span>Отправить заявку</span></span>
+                  <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+                </button>
+                <span style="font-size:12px;color:rgba(255,255,255,.45)">Нажимая кнопку, вы соглашаетесь на обработку данных</span>
+              </div>
+              <div class="bep-form-ok">Спасибо! Заявка отправлена — свяжемся в рабочее время.</div>
+            </form>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="footer-main-area">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-xl-3 col-md-6">
+          <div class="footer-widget footer-col-1">
+            <div class="footer-logo">
+              <a href="{% url 'home' %}" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+                <img src="{% static 'assets/img/logo-mark-white.png' %}" alt="{{ site_brand }}" style="width:34px;height:34px">
+                <span style="color:#fff;font-weight:700;font-size:18px">{{ site_brand }}</span>
+              </a>
+            </div>
+            <div class="footer-text">
+              <p>Машиностроительное оборудование: редукторы, мотор-редукторы, вариаторы,
+                 электродвигатели. {{ product_total }} моделей в каталоге.</p>
+            </div>
+            <div class="footer-text"><p style="margin:0 0 18px">{{ site_address }}<br>{{ site_unp }}</p></div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="footer-widget footer-col-2 widget-nav-menu">
+            <h5 class="title">Каталог</h5>
+            <ul>
+              {% for category in catprocessor_base|slice:":6" %}
+              <li><a href="{% url 'products' category.cat_slug %}">{{ category.cat_name }}</a></li>
+              {% endfor %}
+              <li><a href="{% url 'categorys' %}">Все категории</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="footer-widget footer-col-2 widget-nav-menu">
+            <h5 class="title">Офисы и склады</h5>
+            <ul class="bep-office-list">
+              {% for punkt in punkts_base %}
+              <li>
+                <b><a href="https://yandex.by/maps/?rtext=~{{ punkt.punkt_geo }}" target="_blank" rel="noopener" style="color:#fff;text-decoration:none">{{ punkt.punkt_name }}</a></b>
+                <span>{{ punkt.region.region_name }}</span>
+                <span>{{ punkt.punkt_short_desc }}</span>
+              </li>
+              {% empty %}
+              <li><b>{{ site_address }}</b></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+          <div class="footer-widget widget-contact">
+            <h5 class="title">Связаться</h5>
+            <div class="footer-contact-info">
+              <div class="contact-item">
+                <a href="{{ site_phone_href }}">P: {{ site_phone }}</a>
+                {% for phone in site_phone_alt %}
+                <a href="tel:{{ phone|cut:' '|cut:'('|cut:')'|cut:'-' }}">P: {{ phone }}</a>
+                {% endfor %}
+                <a href="mailto:{{ site_email }}">M: {{ site_email }}</a>
+              </div>
+              <div class="contact-item"><span><i class="tji-clock"></i> Пн–Пт, 9:00–18:00</span></div>
+              <div class="contact-item"><span><a href="{% url 'contact' %}" style="color:inherit">Все офисы и склад</a></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-tags">
+    <div class="container">
+      <div class="footer-tags-head">
+        <h5 class="footer-tags-title">Продукты по назначению</h5>
+        <a class="footer-tags-all" href="{% url 'categorys' %}">Все отрасли и теги <i class="tji-arrow-right-long"></i></a>
+      </div>
+      <div class="footer-tags-list">
+        {% for tag in producttags_base %}
+        <a href="{% url 'producttag' tag.tag_slug %}">{{ tag.tag_name }} <i>{{ tag.n }}</i></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-marquee">
+    <div class="swiper marquee-slider"><div class="swiper-wrapper">
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Редукторы</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/nmrv-chervyachny.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Мотор-редукторы</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/k-seriya.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Вариаторы</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/rt500.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Электродвигатели</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/rc.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Коробки передач</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/korobka-bep00153.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Цепи</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/f-seriya.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Запчасти NMRV</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/r-seriya.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Редукторы</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/s1000.png' %}" alt=""></div></div>
+      <div class="swiper-slide marquee-item"><h4 class="marquee-text">Мотор-редукторы</h4><div class="marquee-img"><img src="{% static 'assets/img/prod/planetarnyj-bep-0151.png' %}" alt=""></div></div>
+    </div></div>
+  </div>
+</footer>

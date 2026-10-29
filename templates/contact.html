@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load editorjs %}
+{% load bep_tags %}
+{% block title %}Контакты — {{ site_brand }}{% endblock %}
+{% block description %}Офисы и склад {{ site_brand }}: Минск, Тула, Смоленск. {{ site_phone }}, {{ site_email }}.{% endblock %}
+{% block body_class %}bep-catalog-page{% endblock %}
+
+{% block content %}
+<section class="bep-pagehead">
+  <div class="bep-pagehead-bg" style="background-image:url('{% static 'assets/img/hero/slide-3.jpg' %}')"></div>
+  <div class="container">
+    <nav class="bep-crumbs" aria-label="Хлебные крошки">
+      <a href="{% url 'home' %}">Главная</a><i class="tji-arrow-right-long"></i>
+      <span>Контакты</span>
+    </nav>
+    <h1 class="bep-pagehead-title">Свяжитесь с нами</h1>
+    <p class="bep-pagehead-lead">{{ site_address }}. {{ site_unp }}. Пн–Пт, 9:00–18:00.</p>
+  </div>
+</section>
+
+<section class="section-gap">
+  <div class="container">
+    <div class="row row-gap-4">
+      <div class="col-lg-5">
+        <div class="bep-office-card">
+          <h3>Напишите нам</h3>
+          <p style="margin:0 0 16px">Заполните форму — инженер свяжется в рабочее время.</p>
+          <form data-bep-form action="{% url 'sendmail' %}" method="post">
+            {% csrf_token %}
+            <div class="bep-form-row">
+              <input type="text" name="name" placeholder="Ваше имя" autocomplete="name">
+              <input type="tel" name="phone" placeholder="+375 (__) ___-__-__" autocomplete="tel" inputmode="tel">
+              <textarea name="message" placeholder="Опишите задачу"></textarea>
+            </div>
+            <div class="bep-form-error"></div>
+            <button class="tj-primary-btn" type="submit">
+              <span class="btn-text"><span>Отправить</span></span>
+              <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+            </button>
+            <div class="bep-form-ok">Спасибо! Заявка отправлена — свяжемся в рабочее время.</div>
+          </form>
+          <p style="margin-top:18px"><a href="{{ site_phone_href }}">{{ site_phone }}</a><br><a href="mailto:{{ site_email }}">{{ site_email }}</a></p>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="bep-contact-grid">
+          {% for region in regions %}
+            {% for punkt in region.punkt_set.all %}
+            <article class="bep-office-card bep-prose">
+              <span class="bep-eyebrow">{{ region.region_name }}</span>
+              <h3>{{ punkt.punkt_name }}</h3>
+              <p>{{ punkt.punkt_short_desc }}</p>
+              {% if punkt.body_editorjs|has_blocks %}{{ punkt.body_editorjs|editorjs }}{% endif %}
+              <p><a href="https://yandex.by/maps/?rtext=~{{ punkt.punkt_geo }}" target="_blank" rel="noopener">Проложить маршрут</a></p>
+              {% if punkt.punkt_map_key %}
+              <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor{{ punkt.punkt_map_key }}&amp;width=100%25&amp;height=220&amp;lang=ru_RU&amp;scroll=true"></script>
+              {% endif %}
+            </article>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-gap" style="padding-top:0">
+  <div class="container">
+    <div class="row row-gap-4">
+      <div class="col-lg-4">
+        <span class="bep-eyebrow">О нас</span>
+        <h2>Уважаемые коллеги, друзья!</h2>
+      </div>
+      <div class="col-lg-8 bep-prose">
+        <p>Мне не хочется начинать это обращение к Вам с фразы: «длительное время» или «динамично развивающаяся» — эти штампы не для разговора старых и добрых друзей. Ведь со многими из Вас мы знакомы лично, где помимо строгих и деловых отношений присутствует и неподдельный интерес о Ваших родных и близких, общих знакомых, желание поздравлять и получать поздравления на праздники. Мы очень ценим эти отношения и это общение.</p>
+        <p>От команды зависит всё. Один в поле не воин. Идей может быть много, а воплотить их в реальность — это задача задач, и Вы являетесь частью этого движения.</p>
+        <p>Мы рады поделиться своим опытом, знаниями и умениями. Главной целью работы ставлю создание команды единомышленников и комфортного делового климата.</p>
+        <p><strong>Сергей Николаевич</strong><br>Руководитель компании</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" data-accent="teal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ site_brand }} — редукторы, мотор-редукторы и электродвигатели{% endblock %}</title>
+<meta name="description" content="{% block description %}Продажа и ремонт редукторов, мотор-редукторов, вариаторов и электродвигателей. Склад в Минске, офисы в Туле и Смоленске.{% endblock %}">
+<link rel="preload" href="{% static 'assets/media/manrope/manrope-cyrillic.woff2' %}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{% static 'assets/css/00-swiper-bundle.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/01-fonts.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/02-bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/03-fontawesome.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/05-swiper-icons.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/06-theme.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/bep.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/cat-hero.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/header.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/mega.css' %}">
+<link rel="stylesheet" href="{% static 'assets/css/content.css' %}">
+{% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% include 'partials/header.html' %}
+<main>
+{% block content %}{% endblock %}
+</main>
+{% include 'partials/footer.html' %}
+{% include 'partials/overlays.html' %}
+{{ search_index|json_script:"bep-search-data" }}
+<script>
+  window.BEP_PRODUCTS = JSON.parse(document.getElementById('bep-search-data').textContent);
+</script>
+<script src="{% static 'assets/js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

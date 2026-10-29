@@ -1,0 +1,237 @@
+/* Шапка как на home-04: белая плавающая панель со скруглением, тёмным меню и CTA-пилюлей */
+
+:root { --bep-hdr-h: 92px; --bep-hdr-gap: 10px; }
+
+body { background: #fff; }
+
+/* сама панель */
+.site-header,
+.site-header.is-sticky {
+  position: fixed;
+  top: var(--bep-hdr-gap);
+  left: var(--bep-hdr-gap);
+  right: var(--bep-hdr-gap);
+  width: auto;
+  padding: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgb(12 30 33 / .08), 0 1px 0 rgb(12 30 33 / .04);
+  backdrop-filter: none;
+  z-index: 990;
+  transition: box-shadow .3s ease;
+}
+.site-header.is-sticky { box-shadow: 0 14px 34px rgb(12 30 33 / .14); }
+
+.site-header .container {
+  max-width: 1720px;
+  padding: 0 22px;
+}
+
+.site-header .header-wrapper {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  height: var(--bep-hdr-h);
+  border: 0;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+}
+
+/* логотип */
+.bep-logo { gap: 10px; flex: none; }
+.bep-logo img { width: 38px; height: auto; filter: none; }
+.bep-logo-text {
+  color: var(--bep-ink);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+.bep-logo-text em {
+  display: block;
+  margin-top: 3px;
+  font-size: 9.5px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--bep-muted);
+  white-space: nowrap;
+}
+
+/* меню по центру; пункт тянется на всю высоту шапки, чтобы курсор не терял hover по пути вниз */
+.site-header .menu-area { justify-self: center; align-self: stretch; }
+.site-header .mainmenu,
+.site-header .mainmenu > ul { height: 100%; }
+.site-header .mainmenu > ul { align-items: stretch; }
+.site-header .mainmenu > ul > li { display: flex; align-items: center; }
+.site-header .mainmenu > ul { gap: 26px; }
+.site-header .mainmenu > ul > li > a {
+  color: var(--bep-ink);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.site-header .mainmenu > ul > li:hover > a,
+.site-header .mainmenu > ul > li.is-active > a { color: var(--bep-accent); }
+.site-header .mainmenu > ul > li.has-dropdown > a:after {
+  border-color: currentColor;
+  opacity: .55;
+}
+.site-header .mainmenu > ul > li .sub-menu {
+  border-radius: 14px;
+  box-shadow: 0 24px 50px rgb(12 30 33 / .14);
+  border: 1px solid var(--bep-line);
+  overflow: visible;
+  margin-top: 14px;
+  pointer-events: auto;
+  /* пауза перед закрытием: курсор успевает доехать до панели, в том числе по диагонали */
+  transition: opacity .16s ease .2s, transform .16s ease .2s, visibility 0s linear .36s;
+}
+.site-header .mainmenu > ul > li:hover > .sub-menu,
+.site-header .mainmenu > ul > li:focus-within > .sub-menu {
+  transition: opacity .16s ease, transform .16s ease, visibility 0s linear;
+}
+/* невидимый мостик через margin-top, иначе hover обрывается в зазоре */
+.site-header .mainmenu > ul > li > .sub-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -18px;
+  height: 18px;
+}
+.site-header .mainmenu > ul > li .sub-menu a { color: var(--bep-text); }
+.site-header .mainmenu > ul > li .sub-menu a:hover { color: var(--bep-accent-dark); }
+
+/* правая группа */
+.site-header .header-right { display: flex; align-items: center; gap: 16px; justify-self: end; }
+
+.site-header .bep-icon-btn {
+  width: 38px; height: 38px;
+  color: var(--bep-ink);
+  background: var(--bep-sand);
+  border-radius: 50%;
+}
+.site-header .bep-icon-btn:hover { background: var(--bep-line); color: var(--bep-ink); }
+
+.site-header .bep-header-phone {
+  color: var(--bep-ink);
+  font-size: 16px;
+  font-weight: 700;
+  gap: 9px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgb(12 30 33 / .25);
+}
+.site-header .bep-header-phone i { color: var(--bep-ink); font-size: 16px; }
+.site-header .bep-header-phone:hover { color: var(--bep-accent-dark); border-color: var(--bep-accent); }
+
+/* CTA-пилюля: акцентный фон + тёмный кружок со стрелкой */
+.site-header .header-btn.tj-primary-btn {
+  background: var(--bep-accent);
+  color: #fff;
+  border-radius: 40px;
+  padding: 8px 10px 8px 22px;
+  gap: 14px;
+  font-size: 14.5px;
+  font-weight: 600;
+  box-shadow: none;
+}
+.site-header .header-btn.tj-primary-btn:hover { background: var(--bep-accent-dark); }
+.site-header .header-btn.tj-primary-btn .btn-icon {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--bep-ink);
+  color: #fff;
+  font-size: 13px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.site-header .header-btn.tj-primary-btn .btn-icon i { transform: rotate(-45deg); }
+
+/* бургер — как на референсе, виден всегда */
+.site-header .bep-burger {
+  display: inline-flex !important;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  margin-left: 2px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.site-header .bep-burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--bep-ink);
+  margin: 0 auto;
+}
+.site-header .bep-burger span:nth-child(2) { width: 18px; margin-right: 0; }
+
+/* в тёмной мобильной панели логотип снова белый */
+#bep-mobile img[src*="logo-mark"] { filter: brightness(0) invert(1); }
+
+/* мобильная панель меню — начинается под шапкой */
+#bep-mobile {
+  top: calc(var(--bep-hdr-h) + var(--bep-hdr-gap) * 2);
+  padding-top: 26px;
+}
+
+/* отступ контента под плавающей панелью */
+main { padding-top: calc(var(--bep-hdr-h) + var(--bep-hdr-gap) * 2 + 6px); }
+
+/* первые секции страниц — вписать под панель */
+.bep-hero1 { margin: 0 var(--bep-hdr-gap); border-radius: 16px; }
+.bep-ch { margin: 0 var(--bep-hdr-gap) 12px; border-radius: 16px; }
+.bep-ready,
+.tj-slider-section { border-radius: 16px; margin: 0 var(--bep-hdr-gap); }
+
+@media (max-width: 1539px) {
+  .bep-logo-text em { display: none; }
+  .bep-logo-text { font-size: 20px; }
+}
+@media (max-width: 1439px) {
+  .site-header .header-wrapper { gap: 14px; }
+  .site-header .menu-area { min-width: 0; }
+  .site-header .mainmenu > ul { gap: 12px; }
+  .site-header .mainmenu > ul > li > a { font-size: 13.5px; }
+  .site-header .bep-header-phone { font-size: 14px; }
+  .site-header .header-btn.tj-primary-btn { padding: 7px 9px 7px 16px; font-size: 13.5px; }
+}
+
+@media (max-width: 1279px) {
+  .site-header .bep-header-phone { display: none !important; }
+}
+@media (max-width: 1199px) {
+  :root { --bep-hdr-h: 80px; }
+  .site-header .container { padding: 0 16px; }
+  .site-header .bep-icon-btn { display: none; }
+  .bep-logo-text { font-size: 20px; }
+}
+
+@media (max-width: 991px) {
+  :root { --bep-hdr-h: 72px; }
+  .site-header .header-wrapper { grid-template-columns: auto 1fr; }
+  .site-header .menu-area { display: none !important; }
+  .site-header .header-right { grid-column: 2; }
+  .site-header .bep-header-phone,
+  .site-header .header-btn { display: none !important; }
+  .bep-logo img { width: 34px; }
+  .bep-logo-text { font-size: 18px; }
+  .bep-logo-text em { font-size: 8.5px; }
+}
+
+@media (max-width: 575px) {
+  :root { --bep-hdr-h: 64px; --bep-hdr-gap: 8px; }
+  .site-header { border-radius: 14px; }
+  .site-header .container { padding: 0 12px; }
+  .bep-logo-text { font-size: 17px; }
+  main { padding-top: calc(var(--bep-hdr-h) + var(--bep-hdr-gap) * 2 + 2px); }
+}

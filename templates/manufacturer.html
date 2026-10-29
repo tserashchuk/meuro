@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load editorjs %}
+{% load bep_tags %}
+{% block title %}{{ manufacturer.manufacturer_title|default:manufacturer.manufacturer_name }} — {{ site_brand }}{% endblock %}
+{% block description %}{{ manufacturer.manufacturer_metadesc|truncatechars:180 }}{% endblock %}
+{% block body_class %}bep-catalog-page{% endblock %}
+
+{% block content %}
+<section class="bep-pagehead">
+  <div class="bep-pagehead-bg" style="background-image:url('{% if manufacturer.manufacturer_big_image %}{{ manufacturer.manufacturer_big_image.url }}{% else %}{% static 'assets/img/hero/slide-2.jpg' %}{% endif %}')"></div>
+  <div class="container">
+    <nav class="bep-crumbs" aria-label="Хлебные крошки">
+      <a href="{% url 'home' %}">Главная</a><i class="tji-arrow-right-long"></i>
+      <a href="{% url 'home' %}#brands">Производители</a><i class="tji-arrow-right-long"></i>
+      <span>{{ manufacturer.manufacturer_name }}</span>
+    </nav>
+    <h1 class="bep-pagehead-title">{{ manufacturer.manufacturer_name }}</h1>
+    {% if manufacturer.manufacturer_desc %}<p class="bep-pagehead-lead">{{ manufacturer.manufacturer_desc }}</p>{% endif %}
+  </div>
+</section>
+
+<section class="section-gap">
+  <div class="container">
+    <div class="row row-gap-4">
+      <div class="col-lg-4">
+        <div class="bep-office-card" style="text-align:center">
+          <img src="{{ manufacturer.manufacturer_image.url }}" alt="{{ manufacturer.manufacturer_name }}" style="max-width:180px;max-height:90px;object-fit:contain">
+          <p style="margin:16px 0 0">{{ products|length }} {{ products|length|ru_plural:"модель,модели,моделей" }} в каталоге</p>
+          <a class="tj-primary-btn" href="#" data-open-modal style="margin-top:16px">
+            <span class="btn-text"><span>Запросить подбор</span></span>
+            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-8 bep-prose">
+        {% if manufacturer.body_editorjs|has_blocks %}
+        {{ manufacturer.body_editorjs|editorjs }}
+        {% elif manufacturer.manufacturer_desc %}
+        <p>{{ manufacturer.manufacturer_desc }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bep-cat-products section-gap" id="products">
+  <div class="container">
+    <div class="bep-brands-head">
+      <div>
+        <h2 class="bep-brands-title">Товары {{ manufacturer.manufacturer_name }}</h2>
+        <p class="bep-brands-sub">{{ products|length }} {{ products|length|ru_plural:"позиция,позиции,позиций" }}</p>
+      </div>
+      <a class="bep-ghost-link" href="{% url 'categorys' %}?maker={{ manufacturer.manufacturer_slug }}">Открыть в каталоге <i class="tji-arrow-right-long"></i></a>
+    </div>
+    <div class="bep-pgrid">
+      {% for product in products %}
+      {% include 'partials/product_card.html' %}
+      {% empty %}
+      <p>В каталоге пока нет позиций этого производителя. Поставим под заказ.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

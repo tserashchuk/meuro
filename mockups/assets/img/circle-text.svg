@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs><path id="ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
+  <text fill="#ffffff" font-family="Manrope, Arial, sans-serif" font-size="14" font-weight="600" letter-spacing="3.4">
+    <textPath href="#ring" startOffset="0">КАТАЛОГ ПРИВОДОВ • 172 МОДЕЛИ •</textPath>
+  </text>
+</svg>

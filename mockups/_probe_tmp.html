@@ -1,0 +1,20 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{margin:0}</style></head><body>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var f=document.createElement('iframe');
+  f.style.cssText='width:1440px;height:2000px;border:0';
+  f.src="catalog.html?tag=%D0%9B%D0%B5%D1%81%D0%BD%D0%BE%D0%B5%20%D1%85%D0%BE%D0%B7%D1%8F%D0%B9%D1%81%D1%82%D0%B2%D0%BE";
+  f.addEventListener('load', function(){
+    setTimeout(function(){
+      var d=f.contentDocument, out={q:"catalog.html?tag=%D0%9B%D0%B5%D1%81%D0%BD%D0%BE%D0%B5%20%D1%85%D0%BE%D0%B7%D1%8F%D0%B9%D1%81%D1%82%D0%B2%D0%BE"};
+      var c=d.getElementById('bep-count'); out.count=c?c.textContent.trim():null;
+      var chips=[].slice.call(d.querySelectorAll('.bep-active-chip')).map(function(x){return x.textContent.trim();});
+      out.active_chips=chips;
+      var pager=d.getElementById('bep-pager'); out.pager=pager?pager.textContent.replace(/\s+/g,' ').trim().slice(0,60):null;
+      out.scrollW=d.documentElement.scrollWidth; out.vw=d.documentElement.clientWidth;
+      var pre=document.createElement('pre'); pre.id='ovf'; pre.textContent=JSON.stringify(out,null,1); document.body.appendChild(pre);
+    }, 800);
+  });
+  document.body.appendChild(f);
+});
+</script></body></html>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bep_tags %}
+{% block title %}{{ producttags.tag_title|default:producttags.tag_name }} — {{ site_brand }}{% endblock %}
+{% block description %}{{ producttags.tag_metadesc|default:producttags.tag_short_desc|truncatechars:180 }}{% endblock %}
+{% block body_class %}bep-catalog-page{% endblock %}
+
+{% block content %}
+<section class="bep-pagehead">
+  <div class="bep-pagehead-bg" style="background-image:url('{% static 'assets/img/hero/slide-1.jpg' %}')"></div>
+  <div class="container">
+    <nav class="bep-crumbs" aria-label="Хлебные крошки">
+      <a href="{% url 'home' %}">Главная</a><i class="tji-arrow-right-long"></i>
+      <a href="{% url 'categorys' %}">Каталог</a><i class="tji-arrow-right-long"></i>
+      <span>{{ producttags.tag_name }}</span>
+    </nav>
+    <h1 class="bep-pagehead-title">{{ producttags.tag_name }}</h1>
+    {% if producttags.tag_short_desc %}<p class="bep-pagehead-lead">{{ producttags.tag_short_desc }}</p>{% endif %}
+  </div>
+</section>
+
+<section class="bep-cat-products section-gap">
+  <div class="container">
+    <div class="bep-brands-head">
+      <div>
+        <h2 class="bep-brands-title">Подборка</h2>
+        <p class="bep-brands-sub">{{ products|length }} {{ products|length|ru_plural:"позиция,позиции,позиций" }}</p>
+      </div>
+      <a class="bep-ghost-link" href="{% url 'categorys' %}?tag={{ producttags.tag_name|urlencode }}">Открыть в каталоге <i class="tji-arrow-right-long"></i></a>
+    </div>
+    <div class="bep-pgrid">
+      {% for product in products %}
+      {% include 'partials/product_card.html' %}
+      {% empty %}
+      <p>В этой подборке пока нет товаров.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

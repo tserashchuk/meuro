@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load editorjs %}
+{% load bep_tags %}
+{% block title %}{{ category.cat_title|default:category.cat_name }} — {{ site_brand }}{% endblock %}
+{% block description %}{{ category.cat_metadesc|default:category.cat_short_desc|truncatechars:180 }}{% endblock %}
+{% block body_class %}bep-catalog-page{% endblock %}
+
+{% block content %}
+<section class="bep-ch">
+  <div class="bep-ch-grid">
+    <div class="bep-ch-left">
+      <div class="bep-ch-body">
+        <nav class="bep-ch-crumbs" aria-label="Хлебные крошки">
+          <a href="{% url 'home' %}">Главная</a><i class="tji-arrow-right-long"></i>
+          <a href="{% url 'categorys' %}">Каталог</a><i class="tji-arrow-right-long"></i>
+          <span>{{ category.cat_name }}</span>
+        </nav>
+        <span class="bep-ch-kicker"><i class="tji-service-1"></i> {{ products|length }}&nbsp;{{ products|length|ru_plural:"модель,модели,моделей" }} · {{ makers|length }}&nbsp;{{ makers|length|ru_plural:"производитель,производителя,производителей" }}</span>
+        <h1 class="bep-ch-title">{{ category.cat_name }}</h1>
+        <div class="bep-ch-row">
+          <a class="bep-ch-arrow" href="#bep-cat-products" aria-label="К товарам">
+            <svg viewBox="0 0 78 78" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M7 71 L71 7"/><path d="M27 7 H71 V51"/>
+            </svg>
+          </a>
+          <span class="bep-ch-div"></span>
+          <p class="bep-ch-desc">{{ category.cat_short_desc|default:category.cat_name }}</p>
+        </div>
+      </div>
+      <a class="bep-ch-scroll" href="#bep-cat-about"><span>Scroll&nbsp;Down</span><i class="tji-arrow-down"></i></a>
+    </div>
+    <div class="bep-ch-right">
+      {% if hero_image %}<img class="bep-ch-img" src="{{ hero_image }}" alt="{{ category.cat_name }}">{% endif %}
+      <div class="bep-ch-notch">
+        <div class="bep-ch-card">
+          <div class="bep-ch-thumbs">
+            {% for maker in makers|slice:":4" %}
+            <img src="{{ maker.manufacturer_image.url }}" alt="{{ maker.manufacturer_name }}" title="{{ maker.manufacturer_name }}">
+            {% endfor %}
+            <a class="bep-ch-plus" href="{% url 'home' %}#brands" aria-label="Все производители">+</a>
+          </div>
+          <b>{{ products|length }}</b>
+          <span>{{ products|length|ru_plural:"модель,модели,моделей" }} от {{ makers|length }} {{ makers|length|ru_plural:"производителя,производителей,производителей" }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bep-cat-about section-gap" id="bep-cat-about">
+  <div class="container">
+    <div class="bep-cat-grid2">
+      <div class="bep-cat-text bep-prose">
+        <span class="bep-eyebrow">О категории</span>
+        <h2 class="bep-cat-title">{{ category.cat_name }}</h2>
+        <p class="bep-cat-lead">{{ category.cat_short_desc|default:category.cat_name }}</p>
+        {% if category.cat_desccript|has_blocks %}
+        {{ category.cat_desccript|editorjs }}
+        {% endif %}
+        <div class="bep-cat-apps">
+          <span class="bep-cat-apps-label">Применение</span>
+          <div class="bep-cat-apps-list">
+            {% for tag in category_tags %}
+            <a class="bep-chip" href="{% url 'producttag' tag.tag_slug %}">{{ tag.tag_name }}</a>
+            {% empty %}
+            <span class="bep-chip">Под задачу заказчика</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <aside class="bep-cat-facts">
+        <div class="bep-cat-facts-row">
+          <div><b>{{ products|length }}</b><span>{{ products|length|ru_plural:"модель,модели,моделей" }}</span></div>
+          <div><b>{{ makers|length }}</b><span>{{ makers|length|ru_plural:"производитель,производителя,производителей" }}</span></div>
+        </div>
+        <div class="bep-cat-facts-row">
+          <div><b>1–3 дня</b><span>поставка со склада</span></div>
+          <div><b>15 лет</b><span>на рынке приводов</span></div>
+        </div>
+        <div class="bep-cat-top">
+          <h4>Часто запрашивают</h4>
+          <ul>
+            {% for product in products|slice:":3" %}
+            <li><a href="{% url 'product' product.product_slug %}">{{ product.product_name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <a class="tj-primary-btn" href="#" data-open-modal><span class="btn-text"><span>Подобрать модель</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a>
+        <a class="bep-cat-phone" href="{{ site_phone_href }}"><i class="tji-phone"></i>{{ site_phone }}</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="bep-cat-products section-gap" id="bep-cat-products">
+  <div class="container">
+    <div class="bep-brands-head">
+      <div>
+        <h2 class="bep-brands-title">{{ category.cat_name }}: все модели</h2>
+        <p class="bep-brands-sub">{{ products|length }} {{ products|length|ru_plural:"позиция,позиции,позиций" }}</p>
+      </div>
+      <a class="bep-ghost-link" href="{% url 'categorys' %}?category={{ category.cat_slug|urlencode }}">Открыть в каталоге с фильтрами <i class="tji-arrow-right-long"></i></a>
+    </div>
+    <div class="bep-catchips" id="bep-cat-chips">
+      <button class="bep-catchip is-active" type="button" data-maker="all">Все <i>{{ products|length }}</i></button>
+      {% for maker in makers %}
+      <button class="bep-catchip" type="button" data-maker="{{ maker.manufacturer_slug }}">{{ maker.manufacturer_name }} <i>{{ maker.n }}</i></button>
+      {% endfor %}
+    </div>
+    <div class="bep-cat-cards" id="bep-cat-cards">
+      {% for product in products %}
+      {% include 'partials/product_card.html' %}
+      {% empty %}
+      <p>В этой категории пока нет товаров.</p>
+      {% endfor %}
+    </div>
+    <div class="bep-empty" id="bep-cat-empty" hidden>
+      <h3>У этого производителя нет позиций в категории</h3>
+      <p>Привезём под заказ — уточните модель и количество.</p>
+    </div>
+  </div>
+</section>
+
+{% if other_categories %}
+<section class="bep-cat-related section-gap">
+  <div class="container">
+    <div class="bep-brands-head">
+      <div>
+        <h2 class="bep-brands-title">Другие категории</h2>
+        <p class="bep-brands-sub">Всего {{ product_total }} моделей в {{ catprocessor_base|length }} категориях</p>
+      </div>
+      <a class="bep-ghost-link" href="{% url 'categorys' %}">Весь каталог <i class="tji-arrow-right-long"></i></a>
+    </div>
+    <div class="bep-relgrid">
+      {% for item in other_categories %}
+      <a class="bep-relcard" href="{% url 'products' item.cat_slug %}">
+        <span class="bep-relcard-img"><img src="{{ item.preview_image.url }}" alt="{{ item.cat_name }}" loading="lazy"></span>
+        <b>{{ item.cat_name }}</b>
+        <span class="bep-relcard-n">{{ item.n }} {{ item.n|ru_plural:"модель,модели,моделей" }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  var wrap = document.getElementById('bep-cat-cards');
+  var chips = [].slice.call(document.querySelectorAll('.bep-catchip'));
+  var empty = document.getElementById('bep-cat-empty');
+  if (!wrap || !chips.length) return;
+  var cards = [].slice.call(wrap.querySelectorAll('.bep-card'));
+  chips.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var m = b.getAttribute('data-maker');
+      chips.forEach(function (x) { x.classList.toggle('is-active', x === b); });
+      var shown = 0;
+      cards.forEach(function (c) {
+        var makers = (c.getAttribute('data-maker') || '').split('|');
+        var ok = m === 'all' || makers.indexOf(m) !== -1;
+        c.hidden = !ok;
+        if (ok) shown++;
+      });
+      if (empty) empty.hidden = shown !== 0;
+    });
+  });
+})();
+</script>
+{% endblock %}

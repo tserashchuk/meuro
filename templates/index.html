@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bep_tags %}
+{% block title %}{{ site_brand }} — редукторы, мотор-редукторы и электродвигатели в Беларуси{% endblock %}
+{% block description %}Продажа и ремонт редукторов, мотор-редукторов, вариаторов и электродвигателей. {{ product_total }} моделей, {{ catprocessor_base|length }} категорий, {{ manufacturers_base|length }} производителей.{% endblock %}
+
+{% block content %}
+<section class="tj-slider-section" id="top">
+  <div class="swiper hero-slider">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide tj-slider-item">
+        <div class="slider-bg-image bep-hero-bg has-photo" style="background-image:linear-gradient(90deg, rgb(var(--bep-ink-rgb) / .97) 0%, rgb(var(--bep-ink-rgb) / .93) 28%, rgb(var(--bep-ink-rgb) / .66) 56%, rgb(var(--bep-ink-rgb) / .3) 100%), linear-gradient(180deg, rgb(var(--bep-ink-rgb) / .35), rgb(var(--bep-ink-rgb) / .12)), url('{% static 'assets/img/hero/slide-1.jpg' %}')"></div>
+        <div class="container">
+          <div class="slider-wrapper">
+            <div class="slider-content">
+              <h1 class="slider-title">Приводная техника<br>для вашего <span>производства.</span></h1>
+              <div class="slider-desc">Редукторы, мотор-редукторы, вариаторы и электродвигатели: {{ product_total }} моделей в каталоге, склад в Минске и подбор под задачу инженером.</div>
+              <div class="bep-hero-actions">
+                <a class="tj-primary-btn" href="#catalog"><span class="btn-text"><span>Подобрать привод</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a>
+                <a class="bep-ghost-btn" href="#products">Популярные позиции</a>
+              </div>
+              <div class="bep-hero-facts">
+                <div><b>{{ product_total }}</b><span>моделей в каталоге</span></div>
+                <div><b>{{ manufacturers_base|length }}</b><span>производителей</span></div>
+                <div><b>15 лет</b><span>на рынке приводов</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide tj-slider-item">
+        <div class="slider-bg-image bep-hero-bg has-photo" style="background-image:linear-gradient(90deg, rgb(var(--bep-ink-rgb) / .97) 0%, rgb(var(--bep-ink-rgb) / .93) 28%, rgb(var(--bep-ink-rgb) / .66) 56%, rgb(var(--bep-ink-rgb) / .3) 100%), linear-gradient(180deg, rgb(var(--bep-ink-rgb) / .35), rgb(var(--bep-ink-rgb) / .12)), url('{% static 'assets/img/hero/slide-2.jpg' %}')"></div>
+        <div class="container">
+          <div class="slider-wrapper">
+            <div class="slider-content">
+              <h1 class="slider-title">Червячные мотор-редукторы <span>NMRV.</span></h1>
+              <div class="slider-desc">Компактный корпус, КПД до 90 %, самоторможение. Типоразмеры 025–150, крутящий момент до 1 550 Н·м, любые монтажные положения.</div>
+              <div class="bep-hero-actions">
+                <a class="tj-primary-btn" href="{% url 'categorys' %}"><span class="btn-text"><span>Смотреть каталог</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a>
+                <a class="bep-ghost-btn" href="#catalog">Все категории</a>
+              </div>
+              <div class="bep-hero-facts"><div><b>025–150</b><span>типоразмеры</span></div><div><b>1 550 Н·м</b><span>макс. момент</span></div><div><b>до 90 %</b><span>КПД</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-slide tj-slider-item">
+        <div class="slider-bg-image bep-hero-bg has-photo" style="background-image:linear-gradient(90deg, rgb(var(--bep-ink-rgb) / .97) 0%, rgb(var(--bep-ink-rgb) / .93) 28%, rgb(var(--bep-ink-rgb) / .66) 56%, rgb(var(--bep-ink-rgb) / .3) 100%), linear-gradient(180deg, rgb(var(--bep-ink-rgb) / .35), rgb(var(--bep-ink-rgb) / .12)), url('{% static 'assets/img/hero/slide-3.jpg' %}')"></div>
+        <div class="container">
+          <div class="slider-wrapper">
+            <div class="slider-content">
+              <h1 class="slider-title">Склад в Минске —<br><span>отгрузка в день заказа.</span></h1>
+              <div class="slider-desc">Ходовые позиции держим на складе в Колодищах. Доставка по Беларуси и в Россию, офисы в Минске, Туле и Смоленске.</div>
+              <div class="bep-hero-actions">
+                <a class="tj-primary-btn" href="{% url 'contact' %}"><span class="btn-text"><span>Запросить наличие</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a>
+                <a class="bep-ghost-btn" href="#process">Как мы работаем</a>
+              </div>
+              <div class="bep-hero-facts"><div><b>{{ punkts_base|length }}</b><span>офиса и склада</span></div><div><b>2 страны</b><span>Беларусь и Россия</span></div><div><b>15</b><span>поставщиков</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-navigation d-none d-xl-inline-flex">
+      <div class="slider-prev" role="button"><span class="anim-icon"><i class="tji-arrow-left"></i><i class="tji-arrow-left"></i></span></div>
+      <div class="slider-next" role="button"><span class="anim-icon"><i class="tji-arrow-right"></i><i class="tji-arrow-right"></i></span></div>
+    </div>
+  </div>
+  <div class="swiper hero-thumb d-none d-lg-block"><div class="swiper-wrapper">
+    <div class="swiper-slide thumb-item"><img src="{% static 'assets/img/hero/slide-1.jpg' %}" alt=""></div>
+    <div class="swiper-slide thumb-item"><img src="{% static 'assets/img/hero/slide-2.jpg' %}" alt=""></div>
+    <div class="swiper-slide thumb-item"><img src="{% static 'assets/img/hero/slide-3.jpg' %}" alt=""></div>
+  </div></div>
+  <div class="circle-text-wrap">
+    <span class="circle-text" style="background-image:url('{% static 'assets/img/circle-text.svg' %}')"></span>
+    <a class="circle-icon" href="#catalog"><i class="tji-arrow-down-big"></i></a>
+  </div>
+</section>
+
+<section class="tj-client-section bep-clients">
+  <div class="bep-logo-marquee"><div class="bep-logo-track">
+    {% for manufacturer in manufacturers_base %}
+    <div class="bep-logo-tile"><img src="{{ manufacturer.manufacturer_image.url }}" alt="{{ manufacturer.manufacturer_name }}"></div>
+    {% endfor %}
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/1btsk.png' %}" alt="1БТСК"></div>
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/maz.png' %}" alt="МАЗ"></div>
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/gomselmash.png' %}" alt="Гомсельмаш"></div>
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/agropromselmash.png' %}" alt="Агропромсельмаш"></div>
+    {% for manufacturer in manufacturers_base %}
+    <div class="bep-logo-tile"><img src="{{ manufacturer.manufacturer_image.url }}" alt="{{ manufacturer.manufacturer_name }}"></div>
+    {% endfor %}
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/1btsk.png' %}" alt="1БТСК"></div>
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/maz.png' %}" alt="МАЗ"></div>
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/gomselmash.png' %}" alt="Гомсельмаш"></div>
+    <div class="bep-logo-tile"><img src="{% static 'assets/img/partners/agropromselmash.png' %}" alt="Агропромсельмаш"></div>
+  </div></div>
+  <div class="bep-clients-orb">
+    <p>Работаем с <span class="bep-clients-num">{{ manufacturers_base|length }}</span> производителями и более <span class="bep-clients-num">15</span> поставщиками <span class="bep-clients-brand">{{ site_brand }}</span></p>
+  </div>
+</section>
+
+<section class="tj-about-section section-gap" id="about">
+  <div class="container">
+    <div class="row row-gap-4">
+      <div class="col-lg-4 col-md-6 order-lg-1 order-3" data-count-block>
+        <div class="countup-item style-2" data-reveal>
+          <span class="count-icon"><i class="tji-box"></i></span>
+          <span class="steps">01.</span>
+          <div class="count-inner">
+            <span class="count-text">Моделей в каталоге</span>
+            <div class="inline-content"><span class="countup-number" data-count="{{ product_total }}">0</span></div>
+          </div>
+          <div class="bep-about-card-note"><i class="tji-check"></i> Собраны из {{ catprocessor_base|length }} категорий и {{ manufacturers_base|length }} брендов</div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-sm-12 order-lg-2 order-1">
+        <div class="about-content-area-2">
+          <div class="about-content">
+            <div class="sec-heading">
+              <span class="sub-title">О компании</span>
+              <h2 class="sec-title">Приводная техника под задачу: подбор, поставка, ремонт.</h2>
+            </div>
+            <p class="desc" style="max-width:560px;color:var(--tj-color-text-body-3);font-size:16px;line-height:1.65;margin:0 0 22px">
+              15 лет поставляем редукторы, мотор-редукторы, вариаторы и электродвигатели на белорусские
+              и российские производства. Подбираем не «что есть», а то, что нужно оборудованию.
+            </p>
+            <a class="text-btn" href="#process"><span class="btn-text"><span>Как мы работаем</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a>
+          </div>
+          <div class="video-img">
+            {% if featured %}
+            <img class="bep-about-img" src="{{ featured.0.product_image.url }}" alt="{{ featured.0.product_name }}">
+            {% else %}
+            <img class="bep-about-img" src="{% static 'assets/img/prod/bep-1271.png' %}" alt="Редуктор">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 order-lg-3 order-2">
+        <div class="customers-box style-2" data-reveal>
+          <div class="customers-bg" style="background:linear-gradient(150deg,var(--bep-accent),var(--bep-accent-dark))"></div>
+          <div class="customers">
+            <ul class="bep-customers-logos">
+              <li><img src="{% static 'assets/img/partners/1btsk.png' %}" alt="1БТСК"></li>
+              <li><img src="{% static 'assets/img/partners/maz.png' %}" alt="МАЗ"></li>
+              <li><img src="{% static 'assets/img/partners/gomselmash.png' %}" alt="Гомсельмаш"></li>
+              <li><img src="{% static 'assets/img/partners/agropromselmash.png' %}" alt="Агропромсельмаш"></li>
+              <li class="is-plus"><i class="tji-plus"></i></li>
+            </ul>
+          </div>
+          <h6 class="customers-text">Более 15 поставщиков — подберём аналог под задачу.</h6>
+          <div class="star-icon zoomInOut"><img src="{% static 'assets/img/star.svg' %}" alt=""></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 order-lg-4 order-4">
+        <div class="countup-item style-2" data-reveal>
+          <span class="count-icon"><i class="tji-team"></i></span>
+          <span class="steps">02.</span>
+          <div class="count-inner">
+            <span class="count-text">Производителей</span>
+            <div class="inline-content"><span class="countup-number" data-count="{{ manufacturers_base|length }}">0</span></div>
+          </div>
+          <div class="bep-about-card-note"><i class="tji-check"></i> NORD, Motovario, Brevini, ЧЗР и другие</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 order-lg-5 order-5">
+        <div class="countup-item style-2" data-reveal>
+          <span class="count-icon"><i class="tji-growth"></i></span>
+          <span class="steps">03.</span>
+          <div class="count-inner">
+            <span class="count-text">Лет на рынке приводов</span>
+            <div class="inline-content"><span class="countup-number" data-count="15">0</span></div>
+          </div>
+          <div class="bep-about-card-note"><i class="tji-check"></i> {{ punkts_base|length }} офиса и склада: Беларусь и Россия</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tj-service-section bep-sol overflow-hidden section-gap section-gap-x" id="catalog">
+  <div class="container">
+    <div class="sec-heading text-center">
+      <span class="bep-sol-kicker"><i class="tji-box"></i> Каталог</span>
+      <h2 class="sec-title">Категории, которые закрывают задачи <span>производства.</span></h2>
+    </div>
+  </div>
+  <div class="swiper bep-sol-slider">
+    <div class="swiper-wrapper">
+      {% for category in home_categories %}
+      <div class="swiper-slide">
+        <a class="bep-sol-card" href="{% url 'products' category.cat_slug %}">
+          <span class="bep-sol-mark" aria-hidden="true"><i class="tji-service-1"></i></span>
+          {% if category.hero_src %}<img src="{{ category.hero_src }}" alt="" loading="lazy">{% endif %}
+          <span class="bep-sol-name">{{ category.cat_name }}</span>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="bep-sol-dots swiper-pagination"></div>
+  </div>
+  <div class="bg-shape-1"><img src="{% static 'assets/img/pattern-2.svg' %}" alt=""></div>
+  <div class="bg-shape-2"><img src="{% static 'assets/img/pattern-3.svg' %}" alt=""></div>
+</section>
+
+<section class="tj-project-section-2 section-gap" id="products">
+  <div class="container">
+    <div class="row"><div class="col-12">
+      <div class="sec-heading text-center">
+        <span class="sub-title">Каталог в наличии</span>
+        <h2 class="sec-title">Популярные позиции — <span>и весь остальной каталог.</span></h2>
+      </div>
+    </div></div>
+  </div>
+  <div class="container-fluid">
+    <div class="row"><div class="col-12">
+      <div class="project-wrapper">
+        <div class="swiper project-slider"><div class="swiper-wrapper">
+          {% for product in featured %}
+          <div class="swiper-slide">
+            <a class="bep-card" href="{% url 'product' product.product_slug %}">
+              <div class="bep-card-img"><img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" loading="lazy"></div>
+              <div class="bep-card-body">
+                {% with cat=product.category.all.0 %}
+                {% if cat %}<span class="bep-card-cat">{{ cat.cat_name }}</span>{% endif %}
+                {% endwith %}
+                <b class="bep-card-name">{{ product.product_name }}</b>
+                <span class="bep-card-link">Смотреть позицию <i class="tji-arrow-right-long"></i></span>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<section class="tj-working-process section-gap section-gap-x" id="process">
+  <div class="container">
+    <div class="row"><div class="col-12">
+      <div class="sec-heading-wrap">
+        <span class="sub-title">Как мы работаем</span>
+        <div class="heading-wrap-content">
+          <div class="sec-heading"><h2 class="sec-title">От заявки до пуска — <span>четыре шага.</span></h2></div>
+          <p class="desc">Подбор по параметрам оборудования, поставка со склада или под заказ, помощь с пуском и ремонтом.</p>
+          <div class="btn-wrap"><a class="tj-primary-btn" href="{% url 'contact' %}"><span class="btn-text"><span>Запросить подбор</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="row"><div class="col-12">
+      <div class="working-process-area">
+        <div class="process-item" data-reveal><div class="process-step"><span>01</span></div><div class="process-content"><h4 class="title">Заявка и консультация</h4><p class="desc">Опишите оборудование и задачу: нагрузка, обороты, передаточное число. Ответим в рабочее время и сразу скажем, есть ли позиция на складе.</p></div></div>
+        <div class="process-item" data-reveal><div class="process-step"><span>02</span></div><div class="process-content"><h4 class="title">Подбор и расчёт</h4><p class="desc">Инженер подбирает модель по крутящему моменту, частоте вращения и монтажному исполнению. Присылаем характеристики и чертежи до оплаты.</p></div></div>
+        <div class="process-item" data-reveal><div class="process-step"><span>03</span></div><div class="process-content"><h4 class="title">Договор и поставка</h4><p class="desc">Со склада в Колодищах — отгрузка в день заказа. Под заказ работаем с поставщиками, доставка по Беларуси и в Россию.</p></div></div>
+        <div class="process-item" data-reveal><div class="process-step"><span>04</span></div><div class="process-content"><h4 class="title">Монтаж и сервис</h4><p class="desc">Помогаем с пуском и обслуживанием, поставляем запчасти. Берём редукторы в ремонт.</p></div></div>
+      </div>
+    </div></div>
+  </div>
+  <div class="bg-shape-1"><img src="{% static 'assets/img/pattern-2.svg' %}" alt=""></div>
+</section>
+
+<section class="bep-know" id="director">
+  <div class="container">
+    <div class="bep-know-grid">
+      <div class="bep-know-photo">
+        <img src="{% static 'assets/img/hero/slide-1.jpg' %}" alt="Привод на конвейерной линии">
+        <div class="bep-know-exp">
+          <span>Опыт</span>
+          <b>15</b>
+          <p>лет на рынке приводной техники</p>
+        </div>
+      </div>
+      <div class="bep-know-main">
+        <div class="bep-know-copy">
+          <span class="bep-know-kicker"><i class="tji-box"></i> Слово руководителя</span>
+          <h2>Сердце производства в надежных <span>руках.</span></h2>
+          <a class="text-btn" href="#process"><span class="btn-text"><span>Как мы работаем</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a>
+        </div>
+        <div class="bep-know-bottom">
+          <blockquote class="bep-know-quote">
+            <p>Частичка нашего труда есть в выращенном зерне, в собранном тракторе, в построенном доме.</p>
+            <footer>
+              <b>Сергей Николаевич</b>
+              <span>руководитель компании «{{ site_brand }}»</span>
+            </footer>
+            <i class="tji-quote" aria-hidden="true"></i>
+          </blockquote>
+          <div class="bep-know-side" role="img" aria-label="Редуктор в цехе" style="background-image:url('{% static 'assets/img/hero/testimonial.jpg' %}')"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tj-team-section section-separator" id="brands">
+  <div class="container">
+    <div class="row"><div class="col-12">
+      <div class="sec-heading text-center">
+        <span class="sub-title">Производители</span>
+        <h2 class="sec-title">Бренды <span>в наличии и под заказ.</span></h2>
+      </div>
+    </div></div>
+    <div class="row row-gap-4">
+      {% for manufacturer in manufacturers_base %}
+      <div class="col-lg-3 col-sm-6">
+        <div class="team-item bep-brand-card">
+          <div class="team-img">
+            <div class="team-img-inner"><img src="{{ manufacturer.manufacturer_image.url }}" alt="{{ manufacturer.manufacturer_name }}"></div>
+          </div>
+          <div class="team-content">
+            <div>
+              <h4 class="title"><a href="{% url 'manufacturer' manufacturer.manufacturer_slug %}">{{ manufacturer.manufacturer_name }}</a></h4>
+              <span class="designation">{{ manufacturer.n }} {{ manufacturer.n|ru_plural:"модель,модели,моделей" }} в каталоге</span>
+            </div>
+            <a class="mail-at" href="{% url 'manufacturer' manufacturer.manufacturer_slug %}"><i class="tji-arrow-right-long"></i></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="tj-pricing-section section-gap">
+  <div class="container">
+    <div class="row"><div class="col-12">
+      <div class="sec-heading text-center">
+        <span class="sub-title">Условия работы</span>
+        <h2 class="sec-title">Три сценария <span>поставки.</span></h2>
+      </div>
+    </div></div>
+    <div class="row row-gap-4">
+      <div class="col-xl-4 col-md-6">
+        <div class="pricing-box" data-reveal>
+          <div class="pricing-header">
+            <h4 class="package-name">Со склада</h4>
+            <div class="package-desc"><p>Ходовые позиции в Колодищах</p></div>
+            <div class="package-price"><span class="price-number">1</span><span class="package-period">/ день — отгрузка</span></div>
+            <div class="pricing-btn"><a class="text-btn" href="{% url 'contact' %}"><span class="btn-text"><span>Запросить наличие</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a></div>
+          </div>
+          <div class="list-items"><ul>
+            <li><i class="tji-list"></i>Наличие на складе в Минском районе</li>
+            <li><i class="tji-list"></i>Самовывоз или доставка по Минску</li>
+            <li><i class="tji-list"></i>Отгрузка в день заказа</li>
+            <li><i class="tji-list"></i>Полный пакет документов</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-6">
+        <div class="pricing-box active" data-reveal>
+          <div class="pricing-header">
+            <h4 class="package-name">Под заказ</h4>
+            <div class="package-desc"><p>{{ manufacturers_base|length }} производителей в каталоге</p></div>
+            <div class="package-price"><span class="price-number">15</span><span class="package-period">/ поставщиков</span></div>
+            <div class="pricing-btn"><a class="text-btn" href="#" data-open-modal><span class="btn-text"><span>Отправить заявку</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a></div>
+          </div>
+          <div class="list-items"><ul>
+            <li><i class="tji-list"></i>Подбор по моменту, оборотам и монтажу</li>
+            <li><i class="tji-list"></i>Чертежи и характеристики до оплаты</li>
+            <li><i class="tji-list"></i>Поставка по Беларуси и в Россию</li>
+            <li><i class="tji-list"></i>Аналоги снятых с производства серий</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-6">
+        <div class="pricing-box" data-reveal>
+          <div class="pricing-header">
+            <h4 class="package-name">Ремонт и сервис</h4>
+            <div class="package-desc"><p>Редукторы и мотор-редукторы</p></div>
+            <div class="package-price"><span class="price-number">{{ punkts_base|length }}</span><span class="package-period">/ офиса и склада</span></div>
+            <div class="pricing-btn"><a class="text-btn" href="{% url 'contact' %}"><span class="btn-text"><span>Обсудить ремонт</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a></div>
+          </div>
+          <div class="list-items"><ul>
+            <li><i class="tji-list"></i>Диагностика и дефектовка редуктора</li>
+            <li><i class="tji-list"></i>Запчасти: валы, фланцы, тяги</li>
+            <li><i class="tji-list"></i>Помощь с пуском и обслуживанием</li>
+            <li><i class="tji-list"></i>Сопровождение на объекте в Минске</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tj-blog-section-2 section-gap" id="industries">
+  <div class="container">
+    <div class="row"><div class="col-12">
+      <div class="sec-heading text-center" style="margin-bottom:36px">
+        <span class="sub-title">Отрасли</span>
+        <h2 class="sec-title">Где работают <span>наши приводы.</span></h2>
+      </div>
+    </div></div>
+    <div class="bep-industries">
+      {% for tag in home_industries %}
+      <a class="blog-item style-2 bep-industry-card" href="{% url 'producttag' tag.tag_slug %}">
+        <div class="blog-thumb">
+          <img src="{% static tag.photo %}" alt="">
+          <div class="blog-date"><span class="date">{{ tag.n }}</span><span class="month">мод.</span></div>
+        </div>
+        <div class="blog-content">
+          <div class="title-area">
+            <div class="blog-meta">
+              <span class="categories"><span>Отрасль</span></span>
+              <span>{{ tag.n }} {{ tag.n|ru_plural:"модель,модели,моделей" }}</span>
+            </div>
+            <h4 class="title">{{ tag.tag_name }}</h4>
+          </div>
+          <span class="text-btn"><span class="btn-icon"><i class="tji-arrow-right-long"></i></span><span class="btn-text"><span>Смотреть подборку</span></span></span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    <div class="bep-industries-more"><a href="{% url 'categorys' %}">Все отрасли и теги <i class="tji-arrow-right-long"></i></a></div>
+  </div>
+</section>
+{% endblock %}

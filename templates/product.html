@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load editorjs %}
+{% load bep_tags %}
+{% block title %}{{ product.product_title|default:product.product_name }} — {{ site_brand }}{% endblock %}
+{% block description %}{{ product.product_metadesc|default:product.product_short_desc|truncatechars:180 }}{% endblock %}
+{% block body_class %}bep-catalog-page{% endblock %}
+
+{% block content %}
+<section class="bep-pagehead bep-pagehead--slim">
+  <div class="bep-pagehead-bg" style="background-image:url('{% static 'assets/img/hero/slide-2.jpg' %}')"></div>
+  <div class="container">
+    <nav class="bep-crumbs" aria-label="Хлебные крошки">
+      <a href="{% url 'home' %}">Главная</a><i class="tji-arrow-right-long"></i>
+      <a href="{% url 'categorys' %}">Каталог</a><i class="tji-arrow-right-long"></i>
+      {% if category %}
+      <a href="{% url 'products' category.cat_slug %}">{{ category.cat_name }}</a><i class="tji-arrow-right-long"></i>
+      {% endif %}
+      <span>{{ product.product_name }}</span>
+    </nav>
+  </div>
+</section>
+
+<section class="bep-product section-gap">
+  <div class="container">
+    <div class="row row-gap-4 align-items-start">
+      <div class="col-lg-7">
+        <div class="bep-gallery">
+          <div class="bep-gallery-main"><img id="bep-gmain" src="{{ product.product_image.url }}" alt="{{ product.product_name }}"></div>
+          <div class="bep-gallery-thumbs">
+            <button type="button" class="bep-gthumb is-active" data-src="{{ product.product_image.url }}"><img src="{{ product.product_image.url }}" alt=""></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="bep-product-info">
+          {% if category %}<a class="bep-product-cat" href="{% url 'products' category.cat_slug %}">{{ category.cat_name }}</a>{% endif %}
+          <h1 class="bep-product-title">{{ product.product_name }}</h1>
+          {% if product.product_short_desc %}
+          <p class="bep-product-lead">{{ product.product_short_desc }}</p>
+          {% elif product.product_metadesc %}
+          <p class="bep-product-lead">{{ product.product_metadesc }}</p>
+          {% endif %}
+          <div class="bep-product-price">
+            <b>Цена по запросу</b>
+            <span>Уточним наличие, сроки поставки и цену под объём</span>
+          </div>
+          <div class="bep-product-actions">
+            <button type="button" class="tj-primary-btn" data-open-modal>
+              <span class="btn-text"><span>Запросить цену</span></span>
+              <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+            </button>
+            <a class="bep-ghost-btn bep-ghost-btn--dark" href="{{ site_phone_href }}"><i class="tji-phone"></i>{{ site_phone }}</a>
+          </div>
+          <dl class="bep-product-meta">
+            <div><dt>Артикул</dt><dd>{{ product.product_desc|default:product.product_slug }}</dd></div>
+            <div><dt>Производитель</dt><dd>
+              {% if product.manufacturer.all %}
+                {% for maker in product.manufacturer.all %}
+                <a href="{% url 'manufacturer' maker.manufacturer_slug %}">{{ maker.manufacturer_name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              {% else %}{{ site_brand }}{% endif %}
+            </dd></div>
+            {% if category %}
+            <div><dt>Категория</dt><dd><a href="{% url 'products' category.cat_slug %}">{{ category.cat_name }}</a></dd></div>
+            {% endif %}
+            <div><dt>Наличие</dt><dd>Склад в Минске / под заказ</dd></div>
+          </dl>
+          {% if product.product_tag.all %}
+          <div class="bep-product-tags">
+            {% for tag in product.product_tag.all %}
+            <a class="bep-tag" href="{% url 'producttag' tag.tag_slug %}">{{ tag.tag_name }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="bep-tabs-wrap">
+      <div class="bep-tabs">
+        {% if product.longdescription|has_blocks %}<button type="button" class="bep-tab is-active" data-tab="desc">Описание</button>{% endif %}
+        {% if product.characteristics|has_blocks %}<button type="button" class="bep-tab{% if not product.longdescription|has_blocks %} is-active{% endif %}" data-tab="specs">Характеристики</button>{% endif %}
+        {% if product.documentationfield|has_blocks %}<button type="button" class="bep-tab{% if not product.longdescription|has_blocks and not product.characteristics|has_blocks %} is-active{% endif %}" data-tab="docs">Документация</button>{% endif %}
+      </div>
+      <div class="bep-tabpanes bep-prose">
+        {% if product.longdescription|has_blocks %}
+        <div class="bep-tabpane is-active" id="pane-desc">{{ product.longdescription|editorjs }}</div>
+        {% endif %}
+        {% if product.characteristics|has_blocks %}
+        <div class="bep-tabpane{% if not product.longdescription|has_blocks %} is-active{% endif %}" id="pane-specs">{{ product.characteristics|editorjs }}</div>
+        {% endif %}
+        {% if product.documentationfield|has_blocks %}
+        <div class="bep-tabpane{% if not product.longdescription|has_blocks and not product.characteristics|has_blocks %} is-active{% endif %}" id="pane-docs">{{ product.documentationfield|editorjs }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if related %}
+    <div class="bep-related">
+      <div class="bep-related-head">
+        <h2 class="bep-related-title">Смотрите также</h2>
+        {% if category %}<a class="bep-inline-link" href="{% url 'products' category.cat_slug %}">Вся категория</a>{% endif %}
+      </div>
+      <div class="bep-related-grid">
+        {% for item in related %}
+        <div class="bep-rel-col">
+          <a class="bep-card bep-pcard" href="{% url 'product' item.product_slug %}">
+            <span class="bep-card-img"><img src="{{ item.product_image.url }}" alt="{{ item.product_name }}" loading="lazy"></span>
+            <span class="bep-card-body">
+              {% with cat=item.category.all.0 %}{% if cat %}<span class="bep-card-cat">{{ cat.cat_name }}</span>{% endif %}{% endwith %}
+              <b class="bep-card-name">{{ item.product_name }}</b>
+              <span class="bep-pcard-maker">{% if item.manufacturer.all %}{{ item.manufacturer.all.0.manufacturer_name }}{% else %}{{ site_brand }}{% endif %}</span>
+            </span>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="bep-cta">
+  <div class="container">
+    <div class="bep-cta-inner">
+      <div>
+        <h2>Не уверены, что модель подойдёт?</h2>
+        <p>Инженер подберёт редуктор по крутящему моменту, оборотам и монтажному исполнению — пришлите параметры оборудования.</p>
+      </div>
+      <div class="bep-cta-actions">
+        <button type="button" class="tj-primary-btn" data-open-modal>
+          <span class="btn-text"><span>Получить подбор</span></span>
+          <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+        </button>
+        <a class="bep-ghost-btn" href="mailto:{{ site_email }}">{{ site_email }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'assets/js/product.js' %}"></script>
+{% endblock %}

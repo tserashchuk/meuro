@@ -1,0 +1,234 @@
+/* Мега-меню «Каталог» — три текстовые колонки + тёмная промо-карточка (референс заказчика) */
+
+.mainmenu > ul > li > .bep-mega,
+.mainmenu > ul > li:hover > .bep-mega,
+.mainmenu > ul > li:focus-within > .bep-mega {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  width: auto;
+  min-width: 0;
+}
+
+.bep-mega-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1.06fr) minmax(0, .92fr) 332px;
+  gap: 0;
+  width: min(1240px, calc(100vw - 40px));
+  padding: 30px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 34px 80px rgb(12 30 33 / .2), 0 0 0 1px rgb(12 30 33 / .04);
+}
+
+/* колонки */
+.bep-mega-col { padding: 0 30px; border-left: 1px solid var(--bep-line); }
+.bep-mega-col:first-child { padding-left: 0; border-left: 0; }
+.bep-mega-col h5 {
+  position: relative;
+  margin: 0 0 8px;
+  padding-bottom: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bep-ink);
+  letter-spacing: -.01em;
+}
+.bep-mega-col h5:after {
+  content: '';
+  position: absolute; left: 0; bottom: 0;
+  width: 44px; height: 2px;
+  background: var(--bep-line);
+}
+
+/* тема задаёт .sub-menu ul как flex — перебиваем именно для мега-меню */
+.mainmenu > ul > li > .bep-mega .bep-mega-list {
+  display: block !important;
+  flex-wrap: nowrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mainmenu > ul > li > .bep-mega .bep-mega-list li {
+  display: block !important;
+  width: 100%;
+  margin: 0;
+}
+.mainmenu > ul > li > .bep-mega .bep-mega-list a {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: normal;
+  color: var(--bep-text);
+  text-decoration: none;
+  transition: color .2s ease, padding-left .2s ease;
+}
+.bep-mega-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.mainmenu > ul > li > .bep-mega .bep-mega-list a:hover { color: var(--bep-accent); padding-left: 4px; }
+.bep-mega-count {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--bep-muted);
+  opacity: .85;
+}
+.bep-mega-badge {
+  flex: none;
+  white-space: nowrap;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--bep-accent);
+  border-radius: 20px;
+  padding: 3px 8px;
+}
+.bep-mega-sep {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--bep-line);
+}
+
+/* промо-карточка */
+.bep-mega-promo {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #14393b 0%, #0c2527 45%, #071618 100%);
+  color: #fff;
+  padding: 26px 24px;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+}
+.bep-mega-promo:before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 1px, transparent 1px 22px);
+  pointer-events: none;
+}
+.bep-mega-promo h3 {
+  position: relative;
+  margin: 0 0 6px;
+  font-size: 54px;
+  line-height: .95;
+  font-weight: 700;
+  letter-spacing: -.04em;
+  color: #fff;
+}
+.bep-mega-promo p {
+  position: relative;
+  margin: 0 0 20px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, .66);
+}
+.bep-mega-phone {
+  position: relative;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 18px;
+  border-radius: 30px;
+  background: var(--bep-accent);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.bep-mega-phone:hover { background: var(--bep-accent-dark); color: #fff; }
+.bep-mega-promo-img {
+  position: absolute;
+  right: -46px;
+  bottom: -46px;
+  width: 246px;
+  height: 246px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6px solid rgba(255, 255, 255, .14);
+}
+.bep-mega-promo-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* простые выпадашки (Производители, Отрасли) — тот же белый стиль */
+.mainmenu .sub-menu:not(.bep-mega) {
+  min-width: 340px;
+  max-width: 380px;
+  padding: 18px 22px;
+  border-radius: 16px;
+  border: 1px solid var(--bep-line);
+  box-shadow: 0 30px 70px rgb(12 30 33 / .16);
+}
+.mainmenu .sub-menu:not(.bep-mega) a {
+  display: block;
+  padding: 9px 0;
+  white-space: normal;
+  line-height: 1.35;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--bep-text);
+}
+.mainmenu .sub-menu:not(.bep-mega) a:hover { color: var(--bep-accent); background: transparent; }
+
+@media (max-width: 1439px) {
+  .bep-mega-badge { display: none; }
+  .bep-mega-panel { width: min(1120px, calc(100vw - 36px)); padding: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) 290px; }
+  .bep-mega-col { padding: 0 22px; }
+  .bep-mega-list a { font-size: 14px; padding: 8px 0; }
+  .bep-mega-promo { min-height: 400px; padding: 22px 20px; }
+  .bep-mega-promo h3 { font-size: 46px; }
+  .bep-mega-promo-img { width: 214px; height: 214px; right: -40px; bottom: -40px; }
+}
+
+/* ---------------------------------------------------------------------------
+   Панель «Отрасли»: все 20 тегов сайта (13 отраслей + 6 серий + тип продукции)
+   --------------------------------------------------------------------------- */
+.bep-mega-panel--tags {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(1000px, calc(100vw - 40px));
+  padding: 26px 30px 24px;
+}
+.bep-mega-panel--tags .bep-mega-col h5 { font-size: 16.5px; }
+.bep-mega-panel--tags .bep-mega-list a { font-size: 14px; padding: 8px 0; }
+
+.bep-tags-mega-foot {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--bep-line);
+}
+.bep-tags-mega-type {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 13px; font-weight: 600; color: var(--tj-color-text-body); text-decoration: none;
+}
+.bep-tags-mega-type-n { font-size: 11.5px; color: var(--bep-muted); }
+.bep-tags-mega-type:hover { color: var(--bep-accent); }
+.bep-tags-mega-all {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 700; color: var(--bep-accent-dark); text-decoration: none;
+  transition: gap .2s ease;
+}
+.bep-tags-mega-all:hover { gap: 13px; color: var(--bep-ink); }
+
+@media (max-width: 1439px) {
+  .bep-mega-panel--tags { width: min(940px, calc(100vw - 36px)); padding: 22px 24px 20px; }
+  .bep-mega-panel--tags .bep-mega-list a { font-size: 13.5px; }
+}
+
+/* ширина самой выпадашки под панель «Отрасли» — панель встаёт ровно по центру */
+.mainmenu > ul > li > .bep-mega.bep-mega--tags { width: min(1000px, calc(100vw - 40px)); }
+@media (max-width: 1439px) {
+  .mainmenu > ul > li > .bep-mega.bep-mega--tags { width: min(940px, calc(100vw - 36px)); }
+}

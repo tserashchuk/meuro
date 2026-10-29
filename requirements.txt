@@ -1,0 +1,7 @@
+django-editorjs-fields==0.2.7
+django-quill==0.1.0
+django-quill-editor==0.1.40
+sqlparse==0.4.3
+
+Django==4.2.30
+Pillow==11.3.0

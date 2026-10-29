@@ -1,0 +1,22 @@
+<article class="bep-card bep-pcard"
+         data-cat="{% for category in product.category.all %}{{ category.cat_slug }}{% if not forloop.last %}|{% endif %}{% endfor %}"
+         data-maker="{% if product.manufacturer.all %}{% for maker in product.manufacturer.all %}{{ maker.manufacturer_slug }}{% if not forloop.last %}|{% endif %}{% endfor %}{% else %}own{% endif %}"
+         data-tags="{% for tag in product.product_tag.all %}{{ tag.tag_name }}{% if not forloop.last %}|{% endif %}{% endfor %}"
+         data-name="{{ product.product_name|lower }}">
+  <a class="bep-card-img" href="{% url 'product' product.product_slug %}">
+    <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" loading="lazy">
+  </a>
+  <div class="bep-card-body">
+    {% with cat=product.category.all.0 %}
+    {% if cat %}
+    <a class="bep-card-cat" href="{% url 'products' cat.cat_slug %}">{{ cat.cat_name }}</a>
+    {% endif %}
+    {% endwith %}
+    <b class="bep-card-name"><a href="{% url 'product' product.product_slug %}">{{ product.product_name }}</a></b>
+    <span class="bep-pcard-maker">
+      {% if product.manufacturer.all %}
+        {% for maker in product.manufacturer.all %}{{ maker.manufacturer_name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+      {% else %}{{ site_brand }}{% endif %}
+    </span>
+  </div>
+</article>

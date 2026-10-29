@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bep_tags %}
+{% block title %}Каталог приводной техники — {{ product_total }} моделей | {{ site_brand }}{% endblock %}
+{% block description %}Каталог: {{ product_total }} моделей редукторов, мотор-редукторов, вариаторов и электродвигателей в {{ catprocessor_base|length }} категориях.{% endblock %}
+{% block body_class %}bep-catalog-page{% endblock %}
+
+{% block content %}
+<section class="bep-hero1">
+  <div class="container">
+    <div class="bep-hero1-inner">
+      <div>
+        <nav class="bep-hero1-crumbs" aria-label="Хлебные крошки">
+          <a href="{% url 'home' %}">Главная</a><i class="tji-arrow-right-long"></i><span>Каталог</span>
+        </nav>
+        <span class="bep-kicker"><i class="tji-service-1"></i> {{ product_total }}&nbsp;{{ product_total|ru_plural:"модель,модели,моделей" }} · {{ catprocessor_base|length }}&nbsp;{{ catprocessor_base|length|ru_plural:"категория,категории,категорий" }}</span>
+        <h1 class="bep-hero1-title">Редукторы и приводы<br><span>под задачу производства.</span></h1>
+        <div class="bep-hero1-row">
+          <a class="bep-hero1-link" href="#bep-grid" aria-label="К товарам"><i class="tji-arrow-down-long"></i></a>
+          <span class="bep-hero1-div"></span>
+          <p class="bep-hero1-desc">Подбираем по крутящему моменту, оборотам и монтажному исполнению.
+            Склад в Минске, {{ manufacturers_base|length }}&nbsp;производителей, доставка по Беларуси и в&nbsp;Россию.</p>
+        </div>
+      </div>
+      <div class="bep-hero1-media">
+        <img src="{% static 'assets/img/hero/slide-1.jpg' %}" alt="Производство приводной техники">
+        <div class="bep-hero1-card">
+          <div><b>{{ product_total }}</b><span>{{ product_total|ru_plural:"модель,модели,моделей" }} в каталоге</span></div>
+          <div class="bep-hero1-thumbs">
+            {% for product in products|slice:":3" %}
+            <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}">
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="bep-hero1-scroll" href="#bep-grid">Листать каталог <i class="tji-arrow-down"></i></a>
+  </div>
+</section>
+
+<section class="bep-catalog section-gap">
+  <div class="container">
+    <div class="row row-gap-4">
+      <div class="col-xl-3 col-lg-4">
+        <button class="bep-filters-toggle" id="bep-filters-toggle" type="button">
+          <i class="tji-list"></i> Фильтры <span id="bep-filters-count"></span>
+        </button>
+        <aside class="bep-sidebar" id="bep-sidebar">
+          <div class="bep-widget">
+            <h3 class="bep-widget-title">Поиск по названию</h3>
+            <div class="bep-search-field bep-sidebar-search">
+              <i class="tji-search"></i>
+              <input type="search" id="bep-q" placeholder="NMRV, RT500, планетарный…" autocomplete="off">
+            </div>
+          </div>
+          <div class="bep-widget">
+            <h3 class="bep-widget-title">Категории</h3>
+            <ul class="bep-filter-list">
+              <li>
+                <label class="bep-filter">
+                  <input type="radio" name="bep-cat" value="all" checked>
+                  <span class="bep-filter-name">Все категории</span>
+                  <i class="bep-filter-count">{{ product_total }}</i>
+                </label>
+              </li>
+              {% for category in catprocessor_base %}
+              <li>
+                <label class="bep-filter">
+                  <input type="radio" name="bep-cat" value="{{ category.cat_slug }}">
+                  <span class="bep-filter-name">{{ category.cat_name }}</span>
+                  <i class="bep-filter-count">{{ category.n }}</i>
+                  <a class="bep-filter-go" href="{% url 'products' category.cat_slug %}" title="О категории" aria-label="Открыть страницу категории">→</a>
+                </label>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="bep-widget">
+            <h3 class="bep-widget-title">Производитель</h3>
+            <ul class="bep-filter-list">
+              {% if own_count %}
+              <li>
+                <label class="bep-filter">
+                  <input type="checkbox" name="bep-maker" value="own">
+                  <span class="bep-filter-name">{{ site_brand }}</span>
+                  <i class="bep-filter-count">{{ own_count }}</i>
+                </label>
+              </li>
+              {% endif %}
+              {% for manufacturer in manufacturers_base %}
+              <li>
+                <label class="bep-filter">
+                  <input type="checkbox" name="bep-maker" value="{{ manufacturer.manufacturer_slug }}">
+                  <span class="bep-filter-name">{{ manufacturer.manufacturer_name }}</span>
+                  <i class="bep-filter-count">{{ manufacturer.n }}</i>
+                </label>
+              </li>
+              {% endfor %}
+            </ul>
+            <a class="bep-widget-link" href="{% url 'home' %}#brands">Все бренды и описания <i class="tji-arrow-right-long"></i></a>
+          </div>
+          <div class="bep-widget">
+            <h3 class="bep-widget-title">Назначение</h3>
+            <div class="bep-chips">
+              {% for tag in producttags_base %}
+              <button type="button" class="bep-chip" data-tag="{{ tag.tag_name }}">{{ tag.tag_name }}</button>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="bep-widget bep-widget-cta">
+            <h3 class="bep-widget-title">Не нашли нужное?</h3>
+            <p>Инженер подберёт модель по крутящему моменту, оборотам и монтажному исполнению.</p>
+            <a class="tj-primary-btn" href="#" data-open-modal><span class="btn-text"><span>Запросить подбор</span></span><span class="btn-icon"><i class="tji-arrow-right-long"></i></span></a>
+            <a class="bep-widget-phone" href="{{ site_phone_href }}"><i class="tji-phone"></i>{{ site_phone }}</a>
+          </div>
+        </aside>
+      </div>
+      <div class="col-xl-9 col-lg-8">
+        <div class="bep-toolbar">
+          <p class="bep-toolbar-count" id="bep-count">Показано 1–16 из {{ products|length }}</p>
+          <div class="bep-toolbar-right">
+            <label class="bep-select-wrap">
+              <select id="bep-sort" aria-label="Сортировка">
+                <option value="name">По названию А–Я</option>
+                <option value="name-desc">По названию Я–А</option>
+                <option value="cat">По категории</option>
+                <option value="maker">По производителю</option>
+              </select>
+            </label>
+            <label class="bep-select-wrap">
+              <select id="bep-perpage" aria-label="Позиций на странице">
+                <option value="12">12 на странице</option>
+                <option value="16" selected>16 на странице</option>
+                <option value="24">24 на странице</option>
+                <option value="48">48 на странице</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div class="bep-active-filters" id="bep-active" hidden></div>
+        <div class="bep-pgrid" id="bep-grid">
+          {% for product in products %}
+          {% include 'partials/product_card.html' %}
+          {% endfor %}
+        </div>
+        <div class="bep-empty" id="bep-empty" hidden>
+          <h3>Ничего не нашлось</h3>
+          <p>Сбросьте фильтры или напишите нам — подберём аналог под задачу.</p>
+          <button type="button" class="tj-primary-btn" id="bep-reset-empty">
+            <span class="btn-text"><span>Сбросить фильтры</span></span>
+            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+          </button>
+        </div>
+        <nav class="bep-pager" id="bep-pager" aria-label="Постраничная навигация"></nav>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'assets/js/catalog.js' %}"></script>
+{% endblock %}
